@@ -30,7 +30,8 @@
 #if defined(ARDUINO) && ARDUINO >= 100
     #include "Arduino.h"
 #else
-    #include <wiringPi.h>
+    #include "pico/stdlib.h"
+    #include "hardware/gpio.h"
     #include <stdint.h>
 // -- coment by disk91    #define NULL 0
     #define CHANGE 1
@@ -79,7 +80,7 @@ class RCSwitch {
 
   private:
 
-    static void handleInterrupt();
+    static void handleInterrupt(uint gpio, uint32_t events);
     int nReceiverInterrupt;
     int nTransmitterPin;
 

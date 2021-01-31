@@ -62,6 +62,7 @@ RCSwitch::RCSwitch(int rxpin, int txpin) {
 	if (txpin != -1 ) {
 		this->enableTransmit(txpin);
 	} else this->nTransmitterPin = -1;
+
 }
 
 /**
@@ -71,8 +72,8 @@ RCSwitch::RCSwitch(int rxpin, int txpin) {
  */
 void RCSwitch::enableTransmit(int nTransmitterPin) {
   this->nTransmitterPin = nTransmitterPin;
-  pinMode(this->nTransmitterPin, OUTPUT);
-  digitalWrite(this->nTransmitterPin, LOW);
+  gpio_set_dir(nTransmitterPin, GPIO_OUT);
+  gpio_put(nTransmitterPin, 0);
 }
 
 /**
@@ -92,7 +93,7 @@ void RCSwitch::enableReceive(int interrupt) {
 
 void RCSwitch::enableReceive() {
   if (this->nReceiverInterrupt != -1) {
-    wiringPiISR(this->nReceiverInterrupt, INT_EDGE_BOTH, &handleInterrupt);
+     gpio_set_irq_enabled_with_callback(this->nReceiverInterrupt, GPIO_IRQ_EDGE_RISE | GPIO_IRQ_EDGE_FALL, true, &handleInterrupt);
   }
 }
 
@@ -137,12 +138,12 @@ void RCSwitch::OokResetAvailable() {
 
 // ==============================================
 // Interrupt Handler to manage the different protocols
-void RCSwitch::handleInterrupt() {
+void RCSwitch::handleInterrupt(uint gpio, uint32_t events) {
 
   static unsigned int duration;
   static unsigned long lastTime;
 
-  long time = micros();
+  long time = time_us_32();
   duration = time - lastTime;
   lastTime = time;
   word p = (unsigned short int) duration;
@@ -175,10 +176,11 @@ void RCSwitch::transmit(int nHighPulses, int nLowPulses) {
 // disk           this->disableReceive();
             disabled_Receive = true;
         }
-        digitalWrite(this->nTransmitterPin, HIGH);
-        delayMicroseconds( nHighPulses);
-        digitalWrite(this->nTransmitterPin, LOW);
-        delayMicroseconds( nLowPulses);
+
+        gpio_put(nTransmitterPin, 1);
+        sleep_us( nHighPulses);
+        gpio_put(nTransmitterPin, 0);
+        sleep_us(nLowPulses);
         if(disabled_Receive){
 // XXX disk           this->enableReceive(nReceiverInterrupt_backup);
         }

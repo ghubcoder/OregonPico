@@ -13,11 +13,15 @@ C code : test.cpp
 
 int main(int argc, char *argv[])
 {
-	int RXPIN = 1;
-	int TXPIN = 0;
+
+	stdio_init_all();
+	printf("Away we go......\n");
+
+	int RXPIN = 3;
+	int TXPIN = -1;
         int loggingok;   // Global var indicating logging on or off
         FILE *fp;        // Global var file handle
-        
+
         if(argc==2) {
           fp = fopen(argv[1], "a"); // Log file opened in append mode to avoid destroying data
           loggingok=1;
@@ -28,9 +32,6 @@ int main(int argc, char *argv[])
         } else {
           loggingok=0;
         }
-
-	if(wiringPiSetup() == -1)
-		return 0;
 
 	RCSwitch *rc = new RCSwitch(RXPIN,TXPIN);
 
@@ -57,6 +58,6 @@ int main(int argc, char *argv[])
 			}
 			delete s;
 		}
-		delay(1000);
+		sleep_ms(1000);
 	}
 }
