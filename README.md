@@ -1,3 +1,22 @@
+OregonPico
+=========
+433 Sensor Oregon Scientific decoder for Raspberry Pico
+
+To deploy this using SWD and monitor using minicom, run the following.
+
+Start following in a terminal:
+openocd -f interface/raspberrypi-swd.cfg -f target/rp2040.cfg
+
+Also start minicom to listen for output in a new terminal:
+minicom -b 115200 -o -D /dev/serial0
+
+Enter gdb and load file:
+gdb-multiarch test.elf
+target remote localhost:3333
+load
+monitor reset init
+continue
+
 OregonPi
 ========
 
