@@ -2,6 +2,8 @@ OregonPico
 =========
 433 Sensor Oregon Scientific decoder for Raspberry Pico
 
+This example uses a rxb6 receiver, and a Raspberry Pi 3 for code transfer and serial output.
+
 To compile this project, you will first need to follow Chapter 2 of the official Pico [guide](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
 
 Layout should be as follows:
