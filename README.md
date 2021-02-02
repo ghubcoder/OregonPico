@@ -23,6 +23,18 @@ monitor reset init
 continue
 ```
 
+In the minicom terminal window you should see something similar to the following output:
+```
+OSV3 FA281493800690C956B5
+Temp : 12.800000
+Humidity : 98.000000
+Channel : 1
+OSV3 FA281493800690C956B5
+Temp : 12.800000
+Humidity : 98.000000
+Channel : 1
+```
+
 Wiring layout:
 
 
