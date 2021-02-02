@@ -23,7 +23,7 @@ cmake ..
 make
 ```
 
-This will create the `test.efl` file below.
+This will create the `test.elf` file below.
 
 To deploy this using SWD and monitor using minicom, run the following once you have wired everything up as below.
 
