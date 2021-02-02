@@ -2,7 +2,30 @@ OregonPico
 =========
 433 Sensor Oregon Scientific decoder for Raspberry Pico
 
-To deploy this using SWD and monitor using minicom, run the following.
+To compile this project, you will first need to follow Chapter 2 of the official Pico [guide](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
+
+Layout should be as follows:
+```
+~/pico/pico-sdk/
+~/pico/OregonPico/
+```
+
+Create a new build dir inside this repo:
+```
+mkdir ~/pico/OregonPico/build
+```
+
+Change into the directory and run the following:
+
+```
+export PICO_SDK_PATH=../../pico-sdk
+cmake ..
+make
+```
+
+This will create the `test.efl` file below.
+
+To deploy this using SWD and monitor using minicom, run the following once you have wired everything up as below.
 
 Start following in a terminal:
 ```
